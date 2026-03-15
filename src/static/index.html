@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>逮二游 - 三人在线扑克</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+</head>
+
+<body>
+    <h1>逮二游 - 在线扑克</h1>
+
+    <!-- 大厅区域 -->
+    <div id="lobby">
+        <div class="section">
+            <h2>创建房间</h2>
+            <label>用户名:</label>
+            <input type="text" id="createName" placeholder="输入用户名">
+            <button id="createBtn">创建房间</button>
+            <div class="result" id="createResult"></div>
+        </div>
+        <div class="section">
+            <h2>加入房间</h2>
+            <label>房间号:</label>
+            <input type="text" id="joinRoomId" placeholder="例如 ABC123">
+            <label>用户名:</label>
+            <input type="text" id="joinName" placeholder="输入用户名">
+            <button id="joinBtn">加入房间</button>
+            <div class="result" id="joinResult"></div>
+        </div>
+    </div>
+
+    <!-- 房间区域（加入后显示） -->
+    <div id="roomSection" style="display: none;">
+        <h2>当前房间 <span id="currentRoomId"></span></h2>
+        <div id="playerList">
+            <h3>在线玩家</h3>
+            <div id="playersContainer"></div>
+        </div>
+        <div>连接状态: <span id="wsStatus">未连接</span></div>
+        <button id="sendPingBtn" disabled>发送 Ping</button>
+    </div>
+
+    <!-- 游戏桌面 -->
+    <div id="gameSection" style="display: none;">
+        <!-- 顶部信息区 -->
+        <div class="game-header">
+            <div>当前轮次：<span id="round">1</span>，阶段：<span id="stage">select</span></div>
+        </div>
+        <div class="poker-table">
+            <!-- 玩家左 -->
+            <div class="player-left">
+                <div class="avatar-large">
+                    <span class="avatar-letter" id="avatar-left"></span>
+                    <span class="online-dot online" id="online-left"></span>
+                </div>
+                <div class="player-name" id="name-left"></div>
+                <div class="player-chips" id="chips-left">30</div>
+                <!-- 秀牌区左（只放两张牌） -->
+                <div class="show-pile show-pile-left" id="show-pile-left"></div>
+                <div class="ready-status" id="ready-left"></div> <!-- 新增 -->
+
+            </div>
+            <!-- 玩家右 -->
+            <div class="player-right">
+                <div class="avatar-large">
+                    <span class="avatar-letter" id="avatar-right"></span>
+                    <span class="online-dot online" id="online-right"></span>
+                </div>
+                <div class="player-name" id="name-right"></div>
+                <div class="player-chips" id="chips-right">30</div>
+                <!-- 秀牌区右 -->
+                <div class="show-pile show-pile-right" id="show-pile-right"></div>
+                <div class="ready-status" id="ready-right"></div> <!-- 新增 -->
+
+            </div>
+            <!-- 玩家下（自己） -->
+            <div class="player-bottom">
+                <div class="avatar-large">
+                    <span class="avatar-letter" id="avatar-bottom"></span>
+                    <span class="online-dot online" id="online-bottom"></span>
+                </div>
+                <div class="player-name" id="name-bottom"></div>
+                <div class="player-chips" id="chips-bottom">30</div>
+                <!-- 秀牌区下 -->
+                <div class="show-pile show-pile-bottom" id="show-pile-bottom"></div>
+                <div class="ready-status" id="ready-right"></div> <!-- 新增 -->
+
+            </div>
+            <!-- 河牌区（独立，位于桌子顶部） -->
+            <div class="river-area" id="riverArea"></div>
+            <!-- 自己的手牌区域（位于最上层） -->
+            <div class="my-hand-area" id="my-hand-area"></div>
+        </div>
+        <!-- 底部控制区（按钮等） -->
+        <div class="game-controls">
+            <button id="selectConfirmBtn" disabled>确认选牌</button>
+            <div id="revealStatus"></div>
+        </div>
+    </div>
+
+    <!-- 模态弹窗（隐藏） -->
+    <div id="modal-overlay" style="display: none;">
+        <div class="modal">
+            <h3 id="modal-title">筹码转移</h3>
+            <p id="modal-message"></p>
+            <div class="slider-container">
+                <input type="range" id="slider" min="1" max="50" value="10">
+                <span id="slider-value">10</span>
+            </div>
+            <div class="modal-buttons">
+                <button id="modal-confirm">确认</button>
+                <button id="modal-cancel">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+    <!-- 结算模态弹窗 -->
+    <div id="gameover-overlay" style="display: none;">
+        <div class="modal">
+            <h3>游戏结束</h3>
+            <div id="gameover-content"></div>
+            <div class="modal-buttons">
+                <button id="restartBtn">再来一局</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="module" src="/main.js"></script>
+</body>
+
+</html>

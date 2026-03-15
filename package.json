@@ -1,0 +1,13 @@
+{
+  "name": "dey-poker",
+  "version": "1.0.0",
+  "description": "三人在线扑克游戏（逮二游）",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.73.0"
+  }
+}

@@ -1,0 +1,18 @@
+name = "dey-poker"                     # Worker 名称，可自定义
+main = "src/index.js"                   # 入口文件
+compatibility_date = "2025-03-15"       # 使用较新的兼容日期，可根据需要调整
+
+# 静态资源托管（对应你的 src/static 目录）
+[assets]
+directory = "./src/static"              # 静态文件目录
+# binding = "ASSETS"                     # 如果需要绑定，可取消注释，默认不绑定
+
+# Durable Object 绑定
+[[durable_objects.bindings]]
+name = "ROOM"                            # 与代码中 env.ROOM 对应
+class_name = "Room"                       # Durable Object 的类名（来自 room-core.js）
+
+# 迁移配置：为 Durable Object 创建命名空间
+[[migrations]]
+tag = "v1"                                # 迁移标签，可自定义
+new_sqlite_classes = ["Room"]              # 列出需要创建的 Durable Object 类名
